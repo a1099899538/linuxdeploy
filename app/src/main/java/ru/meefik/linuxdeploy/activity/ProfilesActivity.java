@@ -208,18 +208,15 @@ public class ProfilesActivity extends AppCompatActivity implements OnTouchListen
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_add:
-                addDialog();
-                break;
-            case R.id.menu_edit:
-                editDialog();
-                break;
-            case R.id.menu_delete:
-                deleteDialog();
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        if (id == R.id.menu_add) {
+            addDialog();
+        } else if (id == R.id.menu_edit) {
+            editDialog();
+        } else if (id == R.id.menu_delete) {
+            deleteDialog();
+        } else {
+            return super.onOptionsItemSelected(item);
         }
 
         return true;

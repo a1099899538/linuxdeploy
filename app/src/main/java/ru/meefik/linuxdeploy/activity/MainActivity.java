@@ -178,40 +178,31 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_start:
-                containerStart(null);
-                break;
-            case R.id.menu_stop:
-                containerStop(null);
-                break;
-            case R.id.menu_properties:
-                containerProperties(null);
-                break;
-            case R.id.menu_install:
-                containerDeploy();
-                break;
-            case R.id.menu_configure:
-                containerConfigure();
-                break;
-            case R.id.menu_export:
-                containerExport();
-                break;
-            case R.id.menu_status:
-                containerStatus();
-                break;
-            case R.id.menu_clear:
-                clearLog();
-                break;
-            case android.R.id.home:
-                if (drawer.isDrawerOpen(GravityCompat.START)) {
-                    drawer.closeDrawer(GravityCompat.START);
-                } else {
-                    drawer.openDrawer(GravityCompat.START);
-                }
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        if (id == R.id.menu_start) {
+            containerStart(null);
+        } else if (id == R.id.menu_stop) {
+            containerStop(null);
+        } else if (id == R.id.menu_properties) {
+            containerProperties(null);
+        } else if (id == R.id.menu_install) {
+            containerDeploy();
+        } else if (id == R.id.menu_configure) {
+            containerConfigure();
+        } else if (id == R.id.menu_export) {
+            containerExport();
+        } else if (id == R.id.menu_status) {
+            containerStatus();
+        } else if (id == R.id.menu_clear) {
+            clearLog();
+        } else if (id == android.R.id.home) {
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+                drawer.openDrawer(GravityCompat.START);
+            }
+        } else {
+            return super.onOptionsItemSelected(item);
         }
 
         return true;
@@ -228,43 +219,37 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.nav_profiles:
-                Intent intent_profiles = new Intent(this, ProfilesActivity.class);
-                startActivity(intent_profiles);
-                break;
-            case R.id.nav_repository:
-                openRepository();
-                break;
-            case R.id.nav_terminal:
-                String uri = "http://127.0.0.1:" + PrefStore.getHttpPort(this) +
-                        "/cgi-bin/terminal?size=" + PrefStore.getFontSize(this);
-                // Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                // startActivity(browserIntent);
-                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-                if (PrefStore.getTheme(this) == R.style.LightTheme) {
-                    builder.setToolbarColor(Color.LTGRAY);
-                } else {
-                    builder.setToolbarColor(Color.DKGRAY);
-                }
-                CustomTabsIntent customTabsIntent = builder.build();
-                customTabsIntent.launchUrl(this, Uri.parse(uri));
-                break;
-            case R.id.nav_settings:
-                Intent intent_settings = new Intent(this, SettingsActivity.class);
-                startActivity(intent_settings);
-                break;
-            case R.id.nav_about:
-                Intent intent_about = new Intent(this, AboutActivity.class);
-                startActivity(intent_about);
-                break;
-            case R.id.nav_exit:
-                if (wifiLock.isHeld()) wifiLock.release();
-                if (wakeLock.isHeld()) wakeLock.release();
-                EnvUtils.execServices(getBaseContext(), new String[]{"telnetd", "httpd"}, "stop");
-                PrefStore.hideNotification(getBaseContext());
-                finish();
-                break;
+        int id = item.getItemId();
+        if (id == R.id.nav_profiles) {
+            Intent intent_profiles = new Intent(this, ProfilesActivity.class);
+            startActivity(intent_profiles);
+        } else if (id == R.id.nav_repository) {
+            openRepository();
+        } else if (id == R.id.nav_terminal) {
+            String uri = "http://127.0.0.1:" + PrefStore.getHttpPort(this) +
+                    "/cgi-bin/terminal?size=" + PrefStore.getFontSize(this);
+            // Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+            // startActivity(browserIntent);
+            CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+            if (PrefStore.getTheme(this) == R.style.LightTheme) {
+                builder.setToolbarColor(Color.LTGRAY);
+            } else {
+                builder.setToolbarColor(Color.DKGRAY);
+            }
+            CustomTabsIntent customTabsIntent = builder.build();
+            customTabsIntent.launchUrl(this, Uri.parse(uri));
+        } else if (id == R.id.nav_settings) {
+            Intent intent_settings = new Intent(this, SettingsActivity.class);
+            startActivity(intent_settings);
+        } else if (id == R.id.nav_about) {
+            Intent intent_about = new Intent(this, AboutActivity.class);
+            startActivity(intent_about);
+        } else if (id == R.id.nav_exit) {
+            if (wifiLock.isHeld()) wifiLock.release();
+            if (wakeLock.isHeld()) wakeLock.release();
+            EnvUtils.execServices(getBaseContext(), new String[]{"telnetd", "httpd"}, "stop");
+            PrefStore.hideNotification(getBaseContext());
+            finish();
         }
 
         drawer.closeDrawer(GravityCompat.START);

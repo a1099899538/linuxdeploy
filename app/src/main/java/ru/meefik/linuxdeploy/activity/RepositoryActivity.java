@@ -243,15 +243,13 @@ public class RepositoryActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_refresh:
-                retrieveIndex();
-                break;
-            case R.id.menu_change_url:
-                changeUrlDialog();
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        if (id == R.id.menu_refresh) {
+            retrieveIndex();
+        } else if (id == R.id.menu_change_url) {
+            changeUrlDialog();
+        } else {
+            return super.onOptionsItemSelected(item);
         }
 
         return true;
